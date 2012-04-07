@@ -1,3 +1,4 @@
+from __future__ import generators
 from math import sqrt
 from array import array
 
@@ -34,6 +35,18 @@ def eras(n):
         siv[2*i:n/i*i+1:i]=[0]*(n/i-1)
   return filter(None,siv)
 
+def primes_million(limit):
+    limit = min(1000000, limit)
+    f = open('primes1.txt')
+    primes = []
+    for l in f:
+        if limit > 0:
+            primes.append(int(l.strip()))
+            limit -= 1
+        else:
+            break
+    return primes
+
 def phi(a):
     """
     A rather naive method.
@@ -51,3 +64,42 @@ def factorial(n):
         f *= x
     
     return f
+
+class polygonal_numbers:
+    def __init__(self, initial_d, increment_d):
+        self.initial_d = initial_d
+        self.increment_d = increment_d
+        self.p = 1
+    
+    def __iter__(self):
+        return self
+
+    def next(self):
+        val = self.p
+        self.p += self.initial_d
+        self.initial_d += self.increment_d
+        return val
+
+class triangle_numbers(polygonal_numbers):
+    def __init__(self):
+        polygonal_numbers.__init__(self, 2, 1)
+
+class square_numbers(polygonal_numbers):
+    def __init__(self):
+        polygonal_numbers.__init__(self, 3, 2)
+
+class pentagonal_numbers(polygonal_numbers):
+    def __init__(self):
+        polygonal_numbers.__init__(self, 4, 3)
+
+class hexagonal_numbers(polygonal_numbers):
+    def __init__(self):
+        polygonal_numbers.__init__(self, 5, 4)
+
+class heptagonal_numbers(polygonal_numbers):
+    def __init__(self):
+        polygonal_numbers.__init__(self, 6, 5)
+
+class octagonal_numbers(polygonal_numbers):
+    def __init__(self):
+        polygonal_numbers.__init__(self, 7, 6)
